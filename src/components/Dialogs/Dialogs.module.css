@@ -22,4 +22,9 @@
 .dialog_item{
     margin: 10px;
 }
+.new_message{
+    margin-left: 25px; 
+    display: flex;
+    align-items: center;
+}
 
