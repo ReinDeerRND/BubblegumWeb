@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import Friends from "../Friends/Friends";
+import FriendsContainer from "../Friends/FriendsContainer";
 import classes from "./Sidenav.module.css";
 
 // let classes ={
@@ -27,7 +27,7 @@ const Sidenav = (props) => {
       <div className={classes.item}>
         <NavLink to="/settings" activeClassName={classes.active}>Settings</NavLink>
       </div>
-      <Friends friends={props.friendsWidget} />
+      <FriendsContainer />
     </div>
   );
 }

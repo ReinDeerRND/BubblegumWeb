@@ -3,7 +3,7 @@ const SEND_MESSAGE = "SEND_MESSAGE";
 
 export const sendMessageCreator = () => ({ type: SEND_MESSAGE });
 export const updateNewMessageCreator = (text) =>
-    ({ type: UPDATE_NEW_MESSAGE_BODY, body:text });
+    ({ type: UPDATE_NEW_MESSAGE_BODY, body: text });
 
 let initState = {
     dialogs: [
@@ -22,23 +22,24 @@ let initState = {
 };
 
 const messageReducer = (state = initState, action) => {
+    let nextState = { ...state };
     switch (action.type) {
         case UPDATE_NEW_MESSAGE_BODY:
-            state.newMessageBody = action.body;
-            return state;
+            nextState.newMessageBody = action.body;
+            return nextState;
         case SEND_MESSAGE:
             let message = {
-                id: state.messages.length,
+                id: nextState.messages.length,
                 userId: 0,
-                text: state.newMessageBody,
+                text: nextState.newMessageBody,
                 income: false
             }
-            state.messages.push(message);
-            state.newMessageBody = "";
-            return state;
-
+            nextState.messages = [...state.messages];
+            nextState.messages.push(message);
+            nextState.newMessageBody = "";
+            return nextState;
         default:
-            return state;
+            return nextState;
     }
 }
 export default messageReducer;
