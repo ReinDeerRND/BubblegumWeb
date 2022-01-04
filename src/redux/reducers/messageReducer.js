@@ -22,24 +22,26 @@ let initState = {
 };
 
 const messageReducer = (state = initState, action) => {
-    let nextState = { ...state };
     switch (action.type) {
         case UPDATE_NEW_MESSAGE_BODY:
-            nextState.newMessageBody = action.body;
-            return nextState;
+            return {
+                ...state,
+                newMessageBody: action.body
+            };
         case SEND_MESSAGE:
             let message = {
-                id: nextState.messages.length,
+                id: state.messages.length,
                 userId: 0,
-                text: nextState.newMessageBody,
+                text: state.newMessageBody,
                 income: false
             }
-            nextState.messages = [...state.messages];
-            nextState.messages.push(message);
-            nextState.newMessageBody = "";
-            return nextState;
+            return {
+                ...state,
+                messages: [...state.messages, message],
+                newMessageBody: ""
+            };
         default:
-            return nextState;
+            return state;
     }
 }
 export default messageReducer;
