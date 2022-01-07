@@ -1,3 +1,5 @@
+import * as _ from "lodash";
+
 const FOLLOW = "FOLLOW";
 const UNFOLLOW = "UNFOLLOW";
 const ADD_USERS = "ADD_USERS";
@@ -27,7 +29,7 @@ const usersReducer = (state = initState, action) => {
         case ADD_USERS:
             return {
                 ...state,
-                users: [...state.users, ...action.users]
+                users: _.uniqBy([...state.users, ...action.users], "id")
             }
         default:
             return state;

@@ -3,9 +3,9 @@ import classes from './Dialogs.module.css'
 import Message from './Message/Message';
 
 const Dialogs = (props) => {
-  console.log(props);
-  let dialogsList = props.dialogs.map(dialog => (<DialogItem name={dialog.name} id={dialog.id} />));
-  let messageList = props.messages.map(message => (<Message message={message.text} />));
+  
+  let dialogsList = props.dialogs.map(dialog => (<DialogItem name={dialog.name} id={dialog.id} key={dialog.id}/>));
+  let messageList = props.messages.map(message => (<Message message={message.text} key={message.id}/>));
   
   let onNewMessageChange = (event) => {
     let newMessageText = event.target.value
