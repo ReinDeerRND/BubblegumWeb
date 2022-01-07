@@ -1,10 +1,6 @@
 const UPDATE_NEW_MESSAGE_BODY = "UPDATE_NEW_MESSAGE_BODY";
 const SEND_MESSAGE = "SEND_MESSAGE";
 
-export const sendMessageCreator = () => ({ type: SEND_MESSAGE });
-export const updateNewMessageCreator = (text) =>
-    ({ type: UPDATE_NEW_MESSAGE_BODY, body: text });
-
 let initState = {
     dialogs: [
         { id: 0, name: 'Andrew' },
@@ -44,4 +40,9 @@ const messageReducer = (state = initState, action) => {
             return state;
     }
 }
+
+export const sendMessageCreator = () => ({ type: SEND_MESSAGE });
+export const updateNewMessageCreator = (text) =>
+    ({ type: UPDATE_NEW_MESSAGE_BODY, body: text });
+
 export default messageReducer;
