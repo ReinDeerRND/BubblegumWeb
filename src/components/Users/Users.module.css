@@ -40,3 +40,17 @@
     grid-area: status;
     
 }
+.page_item{
+    padding: 0 2px;
+    cursor: pointer;
+}
+.pages_container{
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: center;
+}
+.active_page{
+    font-weight: bold;
+    color: rgb(24, 24, 121);
+}

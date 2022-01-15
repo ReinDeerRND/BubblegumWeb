@@ -1,11 +1,14 @@
-import * as _ from "lodash";
-
 const FOLLOW = "FOLLOW";
 const UNFOLLOW = "UNFOLLOW";
-const ADD_USERS = "ADD_USERS";
+const SET_USERS = "SET_USERS";
+const SET_TOTAL_COUNT = "SET_TOTAL_COUNT";
+const SET_SELECTED_PAGE = "SET_SELECTED_PAGE";
 
 let initState = {
     users: [],
+    totalCount: 0,
+    pageSize: 50,
+    selectedPage: 1
 };
 
 const usersReducer = (state = initState, action) => {
@@ -26,10 +29,20 @@ const usersReducer = (state = initState, action) => {
                     return user
                 })
             }
-        case ADD_USERS:
+        case SET_USERS:
             return {
                 ...state,
-                users: _.uniqBy([...state.users, ...action.users], "id")
+                users:  action.users
+            }
+        case SET_TOTAL_COUNT:
+            return {
+                ...state,
+                totalCount: action.count
+            }
+        case SET_SELECTED_PAGE:
+            return {
+                ...state,
+                selectedPage: action.pageNumber
             }
         default:
             return state;
@@ -38,6 +51,8 @@ const usersReducer = (state = initState, action) => {
 
 export const followAC = (userId) => ({ type: FOLLOW, userId });
 export const unfollowAC = (userId) => ({ type: UNFOLLOW, userId });
-export const addUsersAC = (users) => ({ type: ADD_USERS, users })
+export const setUsersAC = (users) => ({ type: SET_USERS, users });
+export const setTotalCountAC = (count) => ({ type: SET_TOTAL_COUNT, count });
+export const setSelectedPageAC = (pageNumber) => ({ type: SET_SELECTED_PAGE, pageNumber });
 
 export default usersReducer;

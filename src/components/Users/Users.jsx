@@ -7,7 +7,7 @@ const Users = (props) => {
     if (props.users.length === 0 ){
         axios
         .get("https://social-network.samuraijs.com/api/1.0/users")
-        .then(res=>props.addUsers(res.data.items));
+        .then(res=>props.setUsers(res.data.items));
     }
 
     return <div>
