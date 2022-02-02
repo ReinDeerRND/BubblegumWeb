@@ -18,7 +18,7 @@ let mapDispatchToProps = (dispatch) => {
         unfollow: (userId) => dispatch(unfollowAC(userId)),
         setUsers: (users) => dispatch(setUsersAC(users)),
         setTotalCount: (count)=>dispatch(setTotalCountAC(count)),
-        setSelectedPage: (pageNumber)=>dispatch(setSelectedPageAC(pageNumber))
+        setSelectedPage: (page)=>dispatch(setSelectedPageAC(page))
     }
 }
 
