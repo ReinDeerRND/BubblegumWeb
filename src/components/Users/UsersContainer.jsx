@@ -1,11 +1,11 @@
 import { connect } from 'react-redux';
 import {
-    followAC,
-    unfollowAC,
-    setUsersAC,
-    setTotalCountAC,
-    setSelectedPageAC,
-    toggleLoadingAC
+    follow,
+    unfollow,
+    setUsers,
+    setTotalCount,
+    setSelectedPage,
+    toggleLoading
 } from '../../redux/reducers/usersReducer';
 //import Users from "./Users";
 import UsersClass from './UsersClass';
@@ -20,16 +20,18 @@ let mapStateToProps = (state) => {
     }
 }
 
-let mapDispatchToProps = (dispatch) => {
-    return {
-        follow: (userId) => dispatch(followAC(userId)),
-        unfollow: (userId) => dispatch(unfollowAC(userId)),
-        setUsers: (users) => dispatch(setUsersAC(users)),
-        setTotalCount: (count) => dispatch(setTotalCountAC(count)),
-        setSelectedPage: (page) => dispatch(setSelectedPageAC(page)),
-        toggleLoading: (isLoading) => dispatch(toggleLoadingAC(isLoading)),
-    }
-}
+// let mapDispatchToProps = (dispatch) => {
+//     return {
+//         follow: (userId) => dispatch(followAC(userId)),
+//         unfollow: (userId) => dispatch(unfollowAC(userId)),
+//         setUsers: (users) => dispatch(setUsersAC(users)),
+//         setTotalCount: (count) => dispatch(setTotalCountAC(count)),
+//         setSelectedPage: (page) => dispatch(setSelectedPageAC(page)),
+//         toggleLoading: (isLoading) => dispatch(toggleLoadingAC(isLoading)),
+//     }
+// }
 
-const UsersContainer = connect(mapStateToProps, mapDispatchToProps)(UsersClass); //Users
+const UsersContainer = connect(mapStateToProps, {
+    follow, unfollow, setUsers, setTotalCount, setSelectedPage, toggleLoading
+})(UsersClass); //Users
 export default UsersContainer;
