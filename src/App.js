@@ -1,5 +1,4 @@
 import './App.css';
-import Profile from './components/Profile/Profile';
 import Header from './components/Header/Header';
 import Sidenav from './components/Sidenav/Sidenav';
 import { Route } from 'react-router';
@@ -9,6 +8,7 @@ import Music from './components/Music/Music';
 import Settings from './components/Settings/Settings';
 import DialogsContainer from './components/Dialogs/DialogsContainer';
 import UsersContainer from './components/Users/UsersContainer';
+import ProfileContainer from './components/Profile/ProfileContainer';
 
 const App = (props) => {
 
@@ -23,7 +23,7 @@ const App = (props) => {
         </div>
         <div className="content">
           {/* <Route path='/profile' component={Profile} /> */}
-          <Route path='/profile' render={()=><Profile  />} />
+          <Route path='/profile' render={()=><ProfileContainer  />} />
           {/* <Route path='/dialogs' component={Dialogs} /> */}
           <Route path='/dialogs' render = {()=><DialogsContainer  />} />
           <Route path='/news' component={News} />
