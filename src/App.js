@@ -23,13 +23,13 @@ const App = (props) => {
         </div>
         <div className="content">
           {/* <Route path='/profile' component={Profile} /> */}
-          <Route path='/profile' render={()=><ProfileContainer  />} />
+          <Route path='/profile/:userId?' render={()=><ProfileContainer  />} />
           {/* <Route path='/dialogs' component={Dialogs} /> */}
           <Route path='/dialogs' render = {()=><DialogsContainer  />} />
+          <Route path='/users' component={UsersContainer} />
           <Route path='/news' component={News} />
           <Route path='/music' component={Music} />
           <Route path='/settings' component={Settings} />
-          <Route path='/users' component={UsersContainer} />
         </div>
       </div>
     </BrowserRouter>

@@ -15,8 +15,13 @@ const ProfileInfo = (props) => {
         <img alt="Avatar" src={props.profile.photos.small} />
         <div>
           <div>{props.profile.fullName}</div>
-          <div>Birth date: August 31, 1987</div>
-          <div>Hobby: {props.profile.aboutMe}</div>
+          <div>About me: {props.profile.aboutMe}</div>
+          <div>Search a Job: {props.profile.lookingForAJob ? <span>yes</span> : <span>no</span>}</div>
+          <div>Searching Job Description:
+            {props.profile.lookingForAJob && props.profile.lookingForAJobDescription
+              ? <span>{props.profile.lookingForAJobDescription}</span>
+              : null}
+          </div>
           <div>Contacts: </div>
           <div className={classes.social_container}>
             {props.profile.contacts.facebook ? <SocialItem social={props.profile.contacts.facebook} title="facebook" /> : null}
