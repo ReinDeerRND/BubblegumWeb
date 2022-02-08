@@ -2,6 +2,7 @@ import React from "react";
 import { NavLink } from 'react-router-dom';
 import classes from './Users.module.css';
 import userPhoto from "../../assets/images/userphoto.jpg";
+import * as axios from "axios";
 
 
 const UsersFunc = (props) => {
@@ -24,8 +25,33 @@ const UsersFunc = (props) => {
                     </NavLink>
                     {
                         user.followed
-                            ? <button onClick={() => { props.unfollow(user.id) }}>Unfollow</button>
-                            : <button onClick={() => { props.follow(user.id) }}>Follow</button>
+                            ? <button onClick={() => {
+                                axios
+                                    .delete(`https://social-network.samuraijs.com/api/1.0/follow/${user.id}`,
+                                        {
+                                            withCredentials: true,
+                                            headers: { "API-KEY": "fe157158-08ae-43a5-a342-8666ee60a3d1" }
+                                        })
+                                    .then(res => {
+                                        if (res.data.resultCode === 0) {
+                                            props.unfollow(user.id)
+                                        }
+                                    })
+                            }}>Unfollow</button>
+                            : <button onClick={() => {
+                                axios
+                                    .post(`https://social-network.samuraijs.com/api/1.0/follow/${user.id}`,
+                                        {},
+                                        {
+                                            withCredentials: true,
+                                            headers: { "API-KEY": "fe157158-08ae-43a5-a342-8666ee60a3d1" }
+                                        })
+                                    .then(res => {
+                                        if (res.data.resultCode === 0) {
+                                            props.follow(user.id)
+                                        }
+                                    })
+                            }}>Follow</button>
                     }
                 </div>
                 <div className={classes.info_container}>
