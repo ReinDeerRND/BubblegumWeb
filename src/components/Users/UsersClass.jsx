@@ -1,7 +1,7 @@
 import React from "react";
-import * as axios from "axios";
 import UsersFunc from "./UsersFunc";
 import Preloader from "../common/Preloader/Preloader";
+import { getUsers } from "../../api/api";
 
 class UsersClass extends React.Component {
 
@@ -11,14 +11,11 @@ class UsersClass extends React.Component {
 
     getUsers(page) {
         this.props.toggleLoading(true);
-        axios
-            .get(`https://social-network.samuraijs.com/api/1.0/users?page=${page}&count=${this.props.pageSize}`,
-                { withCredentials: true })
-            .then(res => {
-                this.props.setUsers(res.data.items);
-                this.props.setTotalCount(res.data.totalCount);
-                this.props.toggleLoading(false);
-            });
+        getUsers(page, this.props.pageSize).then(data => {
+            this.props.setUsers(data.items);
+            this.props.setTotalCount(data.totalCount);
+            this.props.toggleLoading(false);
+        });
     }
 
     onPageChanged(page) {
@@ -29,7 +26,6 @@ class UsersClass extends React.Component {
     render() {
         return <>
             {this.props.isLoading ? <Preloader /> :
-
                 <UsersFunc
                     selectedPage={this.props.selectedPage}
                     users={this.props.users}
@@ -41,8 +37,6 @@ class UsersClass extends React.Component {
                 ></UsersFunc>
             }
         </>
-
-
     }
 
 }
