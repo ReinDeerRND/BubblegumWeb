@@ -1,5 +1,5 @@
 import React from "react";
-import UsersFunc from "./UsersFunc";
+import Users from "./Users";
 import Preloader from "../common/Preloader/Preloader";
 import { getUsers } from "../../api/api";
 
@@ -26,7 +26,7 @@ class UsersClass extends React.Component {
     render() {
         return <>
             {this.props.isLoading ? <Preloader /> :
-                <UsersFunc
+                <Users
                     selectedPage={this.props.selectedPage}
                     users={this.props.users}
                     totalCount={this.props.totalCount}
@@ -34,7 +34,9 @@ class UsersClass extends React.Component {
                     unfollow={this.props.unfollow}
                     follow={this.props.follow}
                     onPageChanged={this.onPageChanged.bind(this)}
-                ></UsersFunc>
+                    toggleFollowing = {this.props.toggleFollowing}
+                    followUsersInProcess = {this.props.followUsersInProcess}
+                ></Users>
             }
         </>
     }

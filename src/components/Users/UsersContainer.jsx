@@ -5,7 +5,8 @@ import {
     setUsers,
     setTotalCount,
     setSelectedPage,
-    toggleLoading
+    toggleLoading,
+    toggleFollowing
 } from '../../redux/reducers/usersReducer';
 //import Users from "./Users";
 import UsersClass from './UsersClass';
@@ -17,6 +18,7 @@ let mapStateToProps = (state) => {
         pageSize: state.usersPage.pageSize,
         selectedPage: state.usersPage.selectedPage,
         isLoading: state.usersPage.isLoading,
+        followUsersInProcess: state.usersPage.followUsersInProcess
     }
 }
 
@@ -32,6 +34,6 @@ let mapStateToProps = (state) => {
 // }
 
 const UsersContainer = connect(mapStateToProps, {
-    follow, unfollow, setUsers, setTotalCount, setSelectedPage, toggleLoading
-})(UsersClass); //Users
+    follow, unfollow, setUsers, setTotalCount, setSelectedPage, toggleLoading, toggleFollowing
+})(UsersClass); 
 export default UsersContainer;
