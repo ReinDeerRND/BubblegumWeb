@@ -1,3 +1,5 @@
+import { getUsers } from "../../api/api";
+
 const FOLLOW = "FOLLOW";
 const UNFOLLOW = "UNFOLLOW";
 const SET_USERS = "SET_USERS";
@@ -72,5 +74,16 @@ export const setTotalCount = (count) => ({ type: SET_TOTAL_COUNT, count });
 export const setSelectedPage = (pageNumber) => ({ type: SET_SELECTED_PAGE, pageNumber });
 export const toggleLoading = (isLoading) => ({ type: TOGGLE_LOADING, isLoading });
 export const toggleFollowing = (isLoading, userId) => ({ type: TOGGLE_FOLLOW, isLoading, userId });
+//thunks
+export const getUsersThunkCreator = (selectedPage, pageSize) => {
+    return (dispatch) => {
+        dispatch(toggleLoading(true));
+        getUsers(selectedPage, pageSize).then(data => {
+            dispatch(setUsers(data.items));
+            dispatch(setTotalCount(data.totalCount));
+            dispatch(toggleLoading(false));
+        });
+    }
+}
 
 export default usersReducer;

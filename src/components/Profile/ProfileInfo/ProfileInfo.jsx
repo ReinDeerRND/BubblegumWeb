@@ -1,6 +1,7 @@
 import Preloader from '../../common/Preloader/Preloader';
 import classes from './ProfileInfo.module.css';
 import SocialItem from './SocialItem';
+import userPhoto from "../../../assets/images/userphoto.jpg";
 
 const ProfileInfo = (props) => {
   if (!props.profile) {
@@ -12,7 +13,7 @@ const ProfileInfo = (props) => {
       <img className={classes.content_img} src="https://www.reisebuerodachau.de/images/layout/slider-02.jpg" alt="China" />
       <div className={classes.description_block}>
         {/* <img alt='avatar' src="https://sun1-20.userapi.com/s/v1/if1/0FZeTjHlzqa60WcRCGKRKkAlnUclSOBc8S21iN7FnQadTKYXk9vPVyQ6vO6gZOLaknvKrlbX.jpg?size=400x0&quality=96&crop=0,160,639,639&ava=1" /> */}
-        <img alt="Avatar" src={props.profile.photos.small} />
+        <img alt="Avatar" src={props.profile.photos.small?props.profile.photos.small: userPhoto } />
         <div>
           <div>{props.profile.fullName}</div>
           <div>About me: {props.profile.aboutMe}</div>

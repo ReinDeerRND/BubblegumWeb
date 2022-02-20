@@ -1,7 +1,7 @@
 import React from "react";
 import Users from "./Users";
 import Preloader from "../common/Preloader/Preloader";
-import { getUsers } from "../../api/api";
+// import { getUsers } from "../../api/api";
 
 class UsersClass extends React.Component {
 
@@ -10,12 +10,13 @@ class UsersClass extends React.Component {
     }
 
     getUsers(page) {
-        this.props.toggleLoading(true);
-        getUsers(page, this.props.pageSize).then(data => {
-            this.props.setUsers(data.items);
-            this.props.setTotalCount(data.totalCount);
-            this.props.toggleLoading(false);
-        });
+        this.props.getUsersThunkCreator(page, this.props.pageSize)
+        // this.props.toggleLoading(true);
+        // getUsers(page, this.props.pageSize).then(data => {
+        //     this.props.setUsers(data.items);
+        //     this.props.setTotalCount(data.totalCount);
+        //     this.props.toggleLoading(false);
+        // });
     }
 
     onPageChanged(page) {
