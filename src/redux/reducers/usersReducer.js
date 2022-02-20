@@ -1,4 +1,4 @@
-import { getUsers } from "../../api/api";
+import { getUsers, unfollowUser, followUser} from "../../api/api";
 
 const FOLLOW = "FOLLOW";
 const UNFOLLOW = "UNFOLLOW";
@@ -67,8 +67,8 @@ const usersReducer = (state = initState, action) => {
     }
 }
 
-export const follow = (userId) => ({ type: FOLLOW, userId });
-export const unfollow = (userId) => ({ type: UNFOLLOW, userId });
+export const setFollow = (userId) => ({ type: FOLLOW, userId });
+export const setUnfollow = (userId) => ({ type: UNFOLLOW, userId });
 export const setUsers = (users) => ({ type: SET_USERS, users });
 export const setTotalCount = (count) => ({ type: SET_TOTAL_COUNT, count });
 export const setSelectedPage = (pageNumber) => ({ type: SET_SELECTED_PAGE, pageNumber });
@@ -83,6 +83,30 @@ export const getUsersThunkCreator = (selectedPage, pageSize) => {
             dispatch(setTotalCount(data.totalCount));
             dispatch(toggleLoading(false));
         });
+    }
+}
+
+export const followUserThunkCreator = (userId) => {
+    return (dispatch) => {
+        dispatch(toggleFollowing(true, userId));
+        followUser(userId).then(res => {
+            if (res.data.resultCode === 0) {
+                dispatch(setFollow(userId))
+            }
+            dispatch(toggleFollowing(false, userId));
+        })
+    }
+}
+
+export const unfollowUserThunkCreator = (userId) => {
+    return (dispatch) => {
+        dispatch(toggleFollowing(true, userId));
+        unfollowUser(userId).then(res => {
+            if (res.data.resultCode === 0) {
+                dispatch(setUnfollow(userId))
+            }
+            dispatch(toggleFollowing(false, userId));
+        })
     }
 }
 
