@@ -15,7 +15,8 @@ let mapStateToProps = (state) => {
         pageSize: state.usersPage.pageSize,
         selectedPage: state.usersPage.selectedPage,
         isLoading: state.usersPage.isLoading,
-        followUsersInProcess: state.usersPage.followUsersInProcess
+        followUsersInProcess: state.usersPage.followUsersInProcess,
+        isAuth: state.auth.isAuth
     }
 }
 

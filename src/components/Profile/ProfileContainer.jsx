@@ -20,7 +20,8 @@ class ProfileContainer extends React.Component {
 }
 
 const mapStateToProps =(state)=>({
-  profile: state.profilePage.profile
+  profile: state.profilePage.profile,
+  isAuth: state.auth.isAuth
 })
 
 export default connect(mapStateToProps, {getProfileThunkCreator})(withRouter(ProfileContainer));
