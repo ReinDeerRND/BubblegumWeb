@@ -18,7 +18,6 @@ class UsersClass extends React.Component {
     }
 
     render() {
-
         return <>
             {this.props.isLoading ? <Preloader /> :
                 <Users
