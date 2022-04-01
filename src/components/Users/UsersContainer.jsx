@@ -1,4 +1,5 @@
 import { connect } from 'react-redux';
+import { withAuthRedirect } from '../../hoc/withAuhRedirect';
 import {
     setSelectedPage,
     getUsersThunkCreator,
@@ -16,7 +17,6 @@ let mapStateToProps = (state) => {
         selectedPage: state.usersPage.selectedPage,
         isLoading: state.usersPage.isLoading,
         followUsersInProcess: state.usersPage.followUsersInProcess,
-        isAuth: state.auth.isAuth
     }
 }
 
@@ -33,5 +33,5 @@ let mapStateToProps = (state) => {
 
 const UsersContainer = connect(mapStateToProps, {
     setSelectedPage, getUsersThunkCreator, unfollowUserThunkCreator, followUserThunkCreator
-})(UsersClass); 
+})(withAuthRedirect(UsersClass)); 
 export default UsersContainer;
