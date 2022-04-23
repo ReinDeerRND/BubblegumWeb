@@ -2,6 +2,7 @@ import Preloader from '../../common/Preloader/Preloader';
 import classes from './ProfileInfo.module.css';
 import SocialItem from './SocialItem';
 import userPhoto from "../../../assets/images/userphoto.jpg";
+import ProfileStatus from "./ProfileStatus";
 
 const ProfileInfo = (props) => {
   if (!props.profile) {
@@ -34,11 +35,9 @@ const ProfileInfo = (props) => {
             {props.profile.contacts.website ? <SocialItem social={props.profile.contacts.website} title="website" /> : null}
             {props.profile.contacts.youtube ? <SocialItem social={props.profile.contacts.youtube} title="youtube" /> : null}
           </div>
-
-
         </div>
-
       </div>
+      <ProfileStatus status={"dum spiro spero"}/>
     </div>
   )
 }
