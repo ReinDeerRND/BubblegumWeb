@@ -8,7 +8,6 @@ const ProfileInfo = (props) => {
   if (!props.profile) {
     return <Preloader />
   }
-
   return (
     <div>
       <img className={classes.content_img} src="https://www.reisebuerodachau.de/images/layout/slider-02.jpg" alt="China" />
@@ -37,7 +36,7 @@ const ProfileInfo = (props) => {
           </div>
         </div>
       </div>
-      <ProfileStatus status={"dum spiro spero"}/>
+      <ProfileStatus status={props.status} updateStatus={props.updateStatus}/>
     </div>
   )
 }
