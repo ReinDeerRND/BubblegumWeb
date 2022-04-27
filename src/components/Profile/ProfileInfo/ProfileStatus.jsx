@@ -3,7 +3,7 @@ import classes from './ProfileStatus.module.css';
 class ProfileStatus extends React.Component {
     state = {
         editMode: false,
-        status: this.props.status
+        status: null
     }
 
     activateEditMode() {
@@ -16,6 +16,14 @@ class ProfileStatus extends React.Component {
             editMode: false
         });
         this.props.updateStatus(this.state.status);
+    }
+
+    componentDidUpdate(prevProps, prevState){
+        if(prevProps.status !== this.props.status){
+            this.setState({
+                status: this.props.status
+            });
+        }
     }
 
     onStatusChange(event) {
