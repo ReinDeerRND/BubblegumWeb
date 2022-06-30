@@ -19,6 +19,9 @@
     margin-right: 50px;
     background-color: orchid;
 }
+.dialog div:last-child{
+    background-color: transparent;
+}
 .dialog_item{
     margin: 10px;
 }
