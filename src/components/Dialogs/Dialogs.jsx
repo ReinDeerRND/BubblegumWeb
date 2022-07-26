@@ -9,7 +9,6 @@ const Dialogs = (props) => {
   let messageList = props.messages.map(message => (<Message message={message.text} key={message.id} />));
 
   let onSubmit = (newMessage) => {
-    console.log(newMessage);
     props.sendMessage(newMessage);
   }
   return (
