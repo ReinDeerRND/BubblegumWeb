@@ -1,0 +1,26 @@
+
+.form_control {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    position: relative;
+    width: 60%;
+}
+
+.form_control.error input,
+.form_control.error textarea {
+    border: solid red 1px;
+}
+
+.form_control.error span{
+    position: absolute;
+    top: -16px;
+    left: 0;
+    color: red;
+    font-size: 14px;
+}
+.textarea {
+    width: 100%;
+}
+
