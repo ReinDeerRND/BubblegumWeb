@@ -10,6 +10,12 @@ const axiosConfig = axios.create({
 export const authAPI = {
     getAuth() {
         return axiosConfig.get("auth/me");
+    },
+    login(email, password, rememberMe = false){
+        return axiosConfig.post("auth/login", {email, password, rememberMe});
+    },
+    logout(){
+        return axiosConfig.delete("auth/login");
     }
 }
 
