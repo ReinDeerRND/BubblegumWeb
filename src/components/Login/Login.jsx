@@ -4,6 +4,7 @@ import { InputControl } from '../common/FormControls/FormControls';
 import { requiredField } from '../../utils/validators';
 import { connect } from 'react-redux';
 import { login, logout } from '../../redux/reducers/authReducer';
+import { Redirect } from 'react-router-dom';
 
 const LoginForm = (props) => {
     return (
@@ -31,6 +32,9 @@ const LoginReduxForm = reduxForm({
 const Login = (props) => {
     const onSubmit = (formData) => {
         props.login(formData.login, formData.password, formData.isRemember)
+    }
+    if(props.isLogged){
+        return <Redirect to="/profile" />
     }
     return (
         <div className={classes.container}>

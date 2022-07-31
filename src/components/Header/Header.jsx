@@ -6,7 +6,7 @@ const Header = (props) => {
     <div className={classes.header_wrapper}>
       <img className={classes.header_img} src="https://e7.pngegg.com/pngimages/539/883/png-clipart-globe-earth-globe-miscellaneous-blue.png" alt="logo" />
       <div className={classes.login_container}>
-        {props.isLogged ? props.login : <NavLink to={"/login"}>Login</NavLink>}
+        {props.isLogged ? <div>{props.login } <button onClick={props.logout}>Log out</button></div> : <NavLink to={"/login"}>Log in</NavLink>}
       </div>
     </div>
   );
