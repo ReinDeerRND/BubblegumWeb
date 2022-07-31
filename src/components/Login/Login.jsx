@@ -18,6 +18,7 @@ const LoginForm = (props) => {
             <div className={classes.field + " " + classes.checkbox}>
                 <Field component={InputControl} name="isRemember" type="checkbox" /> Remember me
             </div>
+            <div className={classes.common_error}>{props.error}</div>
             <div className={classes.field}>
                 <button type="submit">Log In</button>
             </div>

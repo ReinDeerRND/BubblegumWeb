@@ -1,3 +1,4 @@
+import { stopSubmit } from "redux-form";
 import { authAPI } from "../../api/api";
 
 const SET_AUTH_USER_DATA = "SET_AUTH_USER_DATA";
@@ -36,6 +37,10 @@ export const login = (email, password, rememberMe) => (dispatch) => {
     authAPI.login(email, password, rememberMe).then(res => {
         if (res.data.resultCode === 0) {
             dispatch(getAuthThunkCreator());
+        } else {
+            let message = res.data?.messages?.length > 0 ? res.data.messages[0] : 'Any error occured';
+            // action creator from redux-form, может показыавть конкретные поля формы {login: "Login error occured"}
+            dispatch(stopSubmit("login", { _error: message }))
         }
     });
 }
