@@ -25,7 +25,8 @@ const authReducer = (state = initState, action) => {
 export const setAuthUserData = (userId, email, login, isLogged) => ({ type: SET_AUTH_USER_DATA, userData: { userId, email, login, isLogged } });
 
 export const getAuthThunkCreator = () => (dispatch) => {
-    authAPI.getAuth().then(res => {
+    //dispatch can return something, this example - it returns Promise
+    return authAPI.getAuth().then(res => {
         if (res.data.resultCode === 0) {
             let { id, login, email } = res.data.data;
             dispatch(setAuthUserData(id, email, login, true));
