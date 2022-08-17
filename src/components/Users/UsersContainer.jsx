@@ -9,7 +9,7 @@ import {
 } from '../../redux/reducers/usersReducer';
 import {
     getTotalCount,
-    getUsers,
+    getUsersReselector,
     getPageSize,
     getSelectedPage,
     getIsLoading,
@@ -20,7 +20,7 @@ import UsersClass from './UsersClass';
 
 let mapStateToProps = (state) => {
     return {
-        users: getUsers(state),
+        users: getUsersReselector(state),
         totalCount: getTotalCount(state),
         pageSize: getPageSize(state),
         selectedPage: getSelectedPage(state),
