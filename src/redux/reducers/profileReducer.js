@@ -1,6 +1,7 @@
 import { profileAPI } from "../../api/api";
 
 const ADD_POST = "ADD-POST";
+const DELETE_POST = "DELETE_POST";
 const SET_USER_PROFILE = "SET_USER_PROFILE";
 const SET_STATUS = "SET_STATUS";
 
@@ -27,6 +28,11 @@ const profileReducer = (state = initState, action) => {
                 posts: [post, ...state.posts],
 
             };
+        case DELETE_POST:
+            return {
+                ...state,
+                posts: state.posts.filter(post => post.id !== action.postId)
+            }
         case SET_USER_PROFILE:
             return {
                 ...state,
@@ -43,6 +49,7 @@ const profileReducer = (state = initState, action) => {
 }
 
 export const addPostActionCreator = (newPost) => ({ type: ADD_POST, newPost });
+export const deletePostCreator = (postId) => ({ type: DELETE_POST, postId });
 export const setUserProfile = (profile) => ({ type: SET_USER_PROFILE, profile });
 export const setStatus = (status) => ({ type: SET_STATUS, status })
 
@@ -63,7 +70,7 @@ export const updateStatusThunkCreator = (status) => (dispatch) => {
         .then(result => {
             if (result === 0) {
                 dispatch(setStatus(status))
-            } 
+            }
         });
 }
 
