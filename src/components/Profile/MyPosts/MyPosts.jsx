@@ -5,27 +5,23 @@ import { Field, reduxForm } from 'redux-form';
 import { requiredField, maxLength } from '../../../utils/validators';
 import { TextareaControl } from '../../common/FormControls/FormControls';
 
-class MyPosts extends React.PureComponent {
-
-  onSubmit = (newPost) => {
-    this.props.addPost(newPost.newPost);
+const MyPosts = React.memo((props) => {
+  let postList = props.posts.map(post => (<Post key={post.id} text={post.text} likesCount={post.likesCount} />))
+  let onSubmit = (newPost) => {
+    props.addPost(newPost.newPost);
   }
-
-  render() {
-    return (
-      <div className={classes.posts_container}>
-        <div >
-          <h3>Create New Post</h3>
-          <NewPostFormRedux onSubmit={this.onSubmit} />
-        </div>
-        <div>
-          {this.props.posts.map(post => (<Post key={post.id} text={post.text} likesCount={post.likesCount} />))}
-        </div>
+  return (
+    <div className={classes.posts_container}>
+      <div >
+        <h3>Create New Post</h3>
+        <NewPostFormRedux onSubmit={onSubmit} />
       </div>
-    )
-  }
-}
-
+      <div>
+        {postList}
+      </div>
+    </div>
+  )
+})
 const maxLength100 = maxLength(100);
 const NewPostForm = (props) => {
   return (
