@@ -1,12 +1,12 @@
 import { userAPI } from "../../api/api";
 
-const FOLLOW = "FOLLOW";
-const UNFOLLOW = "UNFOLLOW";
-const SET_USERS = "SET_USERS";
-const SET_TOTAL_COUNT = "SET_TOTAL_COUNT";
-const SET_SELECTED_PAGE = "SET_SELECTED_PAGE";
-const TOGGLE_LOADING = "TOGGLE_LOADING";
-const TOGGLE_FOLLOW = "TOGGLE_FOLLOW"
+const FOLLOW = "users/FOLLOW";
+const UNFOLLOW = "users/UNFOLLOW";
+const SET_USERS = "users/SET_USERS";
+const SET_TOTAL_COUNT = "users/SET_TOTAL_COUNT";
+const SET_SELECTED_PAGE = "users/SET_SELECTED_PAGE";
+const TOGGLE_LOADING = "users/TOGGLE_LOADING";
+const TOGGLE_FOLLOW = "users/TOGGLE_FOLLOW"
 
 let initState = {
     users: [],
