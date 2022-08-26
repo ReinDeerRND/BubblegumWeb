@@ -1,24 +1,18 @@
-import { Field, reduxForm } from 'redux-form';
+import { reduxForm } from 'redux-form';
 import classes from './Login.module.css';
-import { InputControl } from '../common/FormControls/FormControls';
+import { createControl, InputControl } from '../common/FormControls/FormControls';
 import { requiredField } from '../../utils/validators';
 import { connect } from 'react-redux';
 import { login, logout } from '../../redux/reducers/authReducer';
 import { Redirect } from 'react-router-dom';
 
-const LoginForm = (props) => {
+const LoginForm = ({ handleSubmit, error }) => {
     return (
-        <form onSubmit={props.handleSubmit}>
-            <div className={classes.field}>
-                <Field component={InputControl} name="login" placeholder="Login" validate={[requiredField]} />
-            </div>
-            <div className={classes.field}>
-                <Field component={InputControl} name="password" placeholder="Password" validate={[requiredField]} type="password" />
-            </div>
-            <div className={classes.field + " " + classes.checkbox}>
-                <Field component={InputControl} name="isRemember" type="checkbox" /> Remember me
-            </div>
-            <div className={classes.common_error}>{props.error}</div>
+        <form onSubmit={handleSubmit}>
+            {createControl(InputControl, "login", "Login", [requiredField],  {autoFocus: true})}
+            {createControl(InputControl, "password", "Password", [requiredField], { type: "password"})}
+            {createControl(InputControl, "isRemember", null, [], { type: "checkbox"}, "Remember me")}
+            <div className={classes.common_error}>{error}</div>
             <div className={classes.field}>
                 <button type="submit">Log In</button>
             </div>
@@ -34,7 +28,7 @@ const Login = (props) => {
     const onSubmit = (formData) => {
         props.login(formData.login, formData.password, formData.isRemember)
     }
-    if(props.isLogged){
+    if (props.isLogged) {
         return <Redirect to="/profile" />
     }
     return (
