@@ -1,46 +1,19 @@
 import React from "react";
-import { NavLink } from 'react-router-dom';
-import classes from './Users.module.css';
-import userPhoto from "../../assets/images/userphoto.jpg";
+import Paginator from "../common/Paginator/Paginator";
+import User from "./User";
 
-const Users = (props) => {
-    let pagesAmount = Math.ceil(props.totalCount / props.pageSize);
-    let pages = [];
-    for (let i = 1; i <= pagesAmount; i++) {
-        pages.push(i);
-    }
+const Users = ({ selectedPage, totalCount, pageSize, onPageChanged, users, ...props }) => {
 
     return <div>
-        <div className={classes.pages_container}>
-            {pages.map(p => <span className={classes.page_item} key={p} onClick={(e) => props.onPageChanged(p)}>
-                <span className={props.selectedPage === p ? classes.active_page : undefined} >{p}</span>
-            </span>)}
-        </div>
+        <Paginator selectedPage={selectedPage} totalCount={totalCount} pageSize={pageSize} onPageChanged={onPageChanged} />
         {
-            props.users.map(user => <div key={user.id} className={classes.card_container}>
-                <div className={classes.photo_container}>
-                    <NavLink to={"/profile/" + user.id}>
-                        <img src={user.photos.small ? user.photos.small : userPhoto} className={classes.photo} alt="{user.name}" />
-                    </NavLink>
-                    {
-                        user.followed
-                            ? <button disabled={props.followUsersInProcess.some(u=>user.id === u)} onClick={() => {
-                                props.unfollowUserThunkCreator(user.id);
-                            }}>Unfollow</button>
-                            : <button disabled={props.followUsersInProcess.some(u=>user.id === u)} onClick={() => {
-                                props.followUserThunkCreator(user.id);
-                            }}>Follow</button>
-                    }
-                </div>
-                <div className={classes.info_container}>
-                    <div className={classes.name}>{user.name}</div>
-                    <div className={classes.location}>
-                        <div>{"user.location.country"}</div>
-                        <div>{"user.location.city"}</div>
-                    </div>
-                    <div className={classes.status}>{user.status}</div>
-                </div>
-            </div>)
+            users.map(user => <User 
+                key={user.id}
+                user={user}
+                followUsersInProcess={props.followUsersInProcess}
+                followUserThunkCreator={props.followUserThunkCreator}
+                unfollowUserThunkCreator={props.unfollowUserThunkCreator}
+            />)
         }
     </div>
 }
