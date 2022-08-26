@@ -75,33 +75,29 @@ export const setSelectedPage = (pageNumber) => ({ type: SET_SELECTED_PAGE, pageN
 export const toggleLoading = (isLoading) => ({ type: TOGGLE_LOADING, isLoading });
 export const toggleFollowing = (isLoading, userId) => ({ type: TOGGLE_FOLLOW, isLoading, userId });
 //thunks
-export const getUsersThunkCreator = (selectedPage, pageSize) => (dispatch) => {
+export const getUsersThunkCreator = (selectedPage, pageSize) => async (dispatch) => {
     dispatch(toggleLoading(true));
-    userAPI.getUsers(selectedPage, pageSize).then(data => {
-        dispatch(setUsers(data.items));
-        dispatch(setTotalCount(data.totalCount));
-        dispatch(toggleLoading(false));
-    });
+    let data = await userAPI.getUsers(selectedPage, pageSize)
+    dispatch(setUsers(data.items));
+    dispatch(setTotalCount(data.totalCount));
+    dispatch(toggleLoading(false));
 }
 
 export const followUserThunkCreator = (userId) => (dispatch) => {
-    dispatch(toggleFollowing(true, userId));
-    userAPI.followUser(userId).then(res => {
-        if (res.data.resultCode === 0) {
-            dispatch(setFollow(userId))
-        }
-        dispatch(toggleFollowing(false, userId));
-    })
+    followUnfollowFlow(dispatch, userId, setFollow, userAPI.followUser.bind(userAPI));
 }
 
-export const unfollowUserThunkCreator = (userId) => (dispatch) => {
+export const unfollowUserThunkCreator = (userId) => async (dispatch) => {
+    followUnfollowFlow(dispatch, userId, setUnfollow, userAPI.unfollowUser.bind(userAPI));
+}
+
+const followUnfollowFlow = async (dispatch, userId, setAction,  apiFn)=>{
     dispatch(toggleFollowing(true, userId));
-    userAPI.unfollowUser(userId).then(res => {
-        if (res.data.resultCode === 0) {
-            dispatch(setUnfollow(userId))
-        }
-        dispatch(toggleFollowing(false, userId));
-    })
+    let res = await apiFn(userId)
+    if (res.data.resultCode === 0) {
+        dispatch(setAction(userId))
+    }
+    dispatch(toggleFollowing(false, userId));
 }
 
 export default usersReducer;
