@@ -16,9 +16,10 @@ import { compose } from 'redux';
 import Preloader from './components/common/Preloader/Preloader';
 //import { withRouter } from 'react-router-dom';
 import { initApp } from './redux/reducers/app.reducer';
+import { Provider } from 'react-redux';
+import store from './redux/store';
 
-class App extends React.Component {
-
+class Wrapper extends React.Component {
   componentDidMount() {
     this.props.initApp();
   }
@@ -59,8 +60,18 @@ const mapStateToProps = (state)=>({
   initialized: state.app.isInitialized
 })
 
-export default compose(
+const WrapperContainer =  compose(
   // withRouter,
   connect(mapStateToProps, { initApp })
-)(App);
+)(Wrapper);
+
+const App = () => {
+  return <React.StrictMode>
+    <Provider store={store}>
+      <WrapperContainer />
+    </Provider>
+  </React.StrictMode>
+}
+
+export default App;
 

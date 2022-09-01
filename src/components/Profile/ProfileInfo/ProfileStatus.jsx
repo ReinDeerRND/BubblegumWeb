@@ -3,7 +3,7 @@ import classes from './ProfileStatus.module.css';
 class ProfileStatus extends React.Component {
     state = {
         editMode: false,
-        status: "no status yet"
+        status: this.props.status || "no status yet"
     }
 
     activateEditMode() {
