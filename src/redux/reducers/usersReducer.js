@@ -13,7 +13,7 @@ let initState = {
     users: [],
     totalCount: 0,
     pageSize: 50,
-    selectedPage: 1,
+    selectedPage: 0,
     isLoading: false,
     followUsersInProcess: []
 };
@@ -72,7 +72,7 @@ export const toggleFollowing = (isLoading, userId) => ({ type: TOGGLE_FOLLOW, is
 //thunks
 export const getUsersThunkCreator = (selectedPage, pageSize) => async (dispatch) => {
     dispatch(toggleLoading(true));
-    let data = await userAPI.getUsers(selectedPage, pageSize)
+    let data = await userAPI.getUsers(selectedPage + 1, pageSize)
     dispatch(setUsers(data.items));
     dispatch(setTotalCount(data.totalCount));
     dispatch(toggleLoading(false));

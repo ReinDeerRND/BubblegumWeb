@@ -23,7 +23,6 @@ export const InputControl = ({ input, meta, ...props }) => {
 
 export const createControl = (componentType, name, placeholder, validators, props, text = "") => {
     let style = props.type === "checkbox" ? classes.field : classes.field + " " + classes.checkbox
-    console.log(style);
     return (
         <div className={style}>
             <Field component={componentType} name={name} placeholder={placeholder} validate={validators}  {...props} /> 
