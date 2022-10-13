@@ -5,12 +5,12 @@ import { BrowserRouter } from 'react-router-dom';
 import News from './components/News/News';
 import Music from './components/Music/Music';
 import Settings from './components/Settings/Settings';
-import DialogsContainer from './components/Dialogs/DialogsContainer';
-import UsersContainer from './components/Users/UsersContainer';
+//import DialogsContainer from './components/Dialogs/DialogsContainer';
+//import UsersContainer from './components/Users/UsersContainer';
 import ProfileContainer from './components/Profile/ProfileContainer';
 import HeaderContainer from './components/Header/HeaderContainer';
 import Login from './components/Login/Login';
-import React from 'react';
+import React, { Suspense } from 'react';
 import { connect } from "react-redux";
 import { compose } from 'redux';
 import Preloader from './components/common/Preloader/Preloader';
@@ -19,13 +19,17 @@ import { initApp } from './redux/reducers/app.reducer';
 import { Provider } from 'react-redux';
 import store from './redux/store';
 
+//lazy-loading components
+const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer'));
+const UsersContainer = React.lazy(()=>import('./components/Users/UsersContainer'));
+
 class Wrapper extends React.Component {
   componentDidMount() {
     this.props.initApp();
   }
 
   render() {
-    if(!this.props.initialized){
+    if (!this.props.initialized) {
       return <Preloader />
     }
 
@@ -42,8 +46,16 @@ class Wrapper extends React.Component {
             {/* <Route path='/profile' component={Profile} /> */}
             <Route path='/profile/:userId?' render={() => <ProfileContainer />} />
             {/* <Route path='/dialogs' component={Dialogs} /> */}
-            <Route path='/dialogs' render={() => <DialogsContainer />} />
-            <Route path='/users' component={UsersContainer} />
+            <Route path='/dialogs' render={() => {
+              return <Suspense fallback={<Preloader />}>
+                <DialogsContainer />
+              </Suspense>
+            }} />
+            <Route path='/users' render={() => {
+              return <Suspense fallback={<Preloader />}>
+                <UsersContainer />
+              </Suspense>
+            }} />
             <Route path='/news' component={News} />
             <Route path='/music' component={Music} />
             <Route path='/settings' component={Settings} />
@@ -56,11 +68,11 @@ class Wrapper extends React.Component {
 
 }
 
-const mapStateToProps = (state)=>({
+const mapStateToProps = (state) => ({
   initialized: state.app.isInitialized
 })
 
-const WrapperContainer =  compose(
+const WrapperContainer = compose(
   // withRouter,
   connect(mapStateToProps, { initApp })
 )(Wrapper);
