@@ -5,12 +5,10 @@ import { BrowserRouter } from 'react-router-dom';
 import News from './components/News/News';
 import Music from './components/Music/Music';
 import Settings from './components/Settings/Settings';
-//import DialogsContainer from './components/Dialogs/DialogsContainer';
-//import UsersContainer from './components/Users/UsersContainer';
 import ProfileContainer from './components/Profile/ProfileContainer';
 import HeaderContainer from './components/Header/HeaderContainer';
 import Login from './components/Login/Login';
-import React, { Suspense } from 'react';
+import React from 'react';
 import { connect } from "react-redux";
 import { compose } from 'redux';
 import Preloader from './components/common/Preloader/Preloader';
@@ -18,10 +16,11 @@ import Preloader from './components/common/Preloader/Preloader';
 import { initApp } from './redux/reducers/app.reducer';
 import { Provider } from 'react-redux';
 import store from './redux/store';
+import { withLazyLoad } from './hoc/withLazyLoad';
 
 //lazy-loading components
 const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer'));
-const UsersContainer = React.lazy(()=>import('./components/Users/UsersContainer'));
+const UsersContainer = React.lazy(() => import('./components/Users/UsersContainer'));
 
 class Wrapper extends React.Component {
   componentDidMount() {
@@ -32,7 +31,6 @@ class Wrapper extends React.Component {
     if (!this.props.initialized) {
       return <Preloader />
     }
-
     return (
       <BrowserRouter>
         <div className="wrapper">
@@ -43,19 +41,9 @@ class Wrapper extends React.Component {
             <Sidenav />
           </div>
           <div className="content">
-            {/* <Route path='/profile' component={Profile} /> */}
             <Route path='/profile/:userId?' render={() => <ProfileContainer />} />
-            {/* <Route path='/dialogs' component={Dialogs} /> */}
-            <Route path='/dialogs' render={() => {
-              return <Suspense fallback={<Preloader />}>
-                <DialogsContainer />
-              </Suspense>
-            }} />
-            <Route path='/users' render={() => {
-              return <Suspense fallback={<Preloader />}>
-                <UsersContainer />
-              </Suspense>
-            }} />
+            <Route path='/dialogs' render={withLazyLoad(DialogsContainer)} />
+            <Route path='/users' render={withLazyLoad(UsersContainer)} />
             <Route path='/news' component={News} />
             <Route path='/music' component={Music} />
             <Route path='/settings' component={Settings} />
