@@ -2,6 +2,7 @@ import Preloader from '../../common/Preloader/Preloader';
 import classes from './ProfileInfo.module.css';
 import SocialItem from './SocialItem';
 import userPhoto from "../../../assets/images/userphoto.jpg";
+import backgroundPhoto from "../../../assets/images/china.jpg";
 //import ProfileStatus from "./ProfileStatus";
 import ProfileStatusWithHooks from './ProfileStatusWithHooks';
 
@@ -9,12 +10,25 @@ const ProfileInfo = (props) => {
   if (!props.profile) {
     return <Preloader />
   }
+  let selectedFile = null;
+
+  const onFileSelected = (event) => {
+    if (event.target?.files?.length) {
+      selectedFile = event.target.files[0];
+    }
+  }
+
+  const onUploadPhoto = () => {
+    if (selectedFile) {
+      props.uploadPhoto(selectedFile);
+    }
+  }
+
   return (
     <div>
-      <img className={classes.content_img} src="https://www.reisebuerodachau.de/images/layout/slider-02.jpg" alt="China" />
+      <img className={classes.content_img} src={backgroundPhoto} alt="China" />
       <div className={classes.description_block}>
-        {/* <img alt='avatar' src="https://sun1-20.userapi.com/s/v1/if1/0FZeTjHlzqa60WcRCGKRKkAlnUclSOBc8S21iN7FnQadTKYXk9vPVyQ6vO6gZOLaknvKrlbX.jpg?size=400x0&quality=96&crop=0,160,639,639&ava=1" /> */}
-        <img alt="Avatar" src={props.profile.photos.small?props.profile.photos.small: userPhoto } />
+        <img alt="Avatar" src={props.profile.photos.small || userPhoto} />
         <div>
           <div>{props.profile.fullName}</div>
           <div>About me: {props.profile.aboutMe}</div>
@@ -37,7 +51,11 @@ const ProfileInfo = (props) => {
           </div>
         </div>
       </div>
-      <ProfileStatusWithHooks status={props.status} updateStatus={props.updateStatus}/>
+      <div className={classes.download_block}>
+        {props.isOwner && <input type="file" onChange={onFileSelected} />}
+        <button onClick={onUploadPhoto}>Upload Photo</button>
+      </div>
+      <ProfileStatusWithHooks status={props.status} updateStatus={props.updateStatus} />
     </div>
   )
 }

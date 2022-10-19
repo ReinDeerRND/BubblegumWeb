@@ -11,12 +11,12 @@ export const authAPI = {
     getAuth() {
         return axiosConfig.get("auth/me");
     },
-    login(email, password, rememberMe = false){
-        return axiosConfig.post("auth/login", {email, password, rememberMe});
+    login(email, password, rememberMe = false) {
+        return axiosConfig.post("auth/login", { email, password, rememberMe });
     },
-    logout(){
+    logout() {
         return axiosConfig.delete("auth/login");
-    }
+    },
 }
 
 
@@ -30,7 +30,7 @@ export const userAPI = {
     },
     unfollowUser(userId) {
         return axiosConfig.delete(`follow/${userId}`);
-    }
+    },
 }
 
 export const profileAPI = {
@@ -44,6 +44,14 @@ export const profileAPI = {
     },
     updateStatus(status) {
         return axiosConfig.put(`/profile/status/`, { status: status })
-            .then(response => response?.resultCode );
-    }
+            .then(response => response?.resultCode);
+    },
+    uploadPhoto(file) {
+        const formData = new FormData();
+        formData.append('image', file)
+        return axiosConfig.put(`/profile/photo`, formData, {
+            headers: { 'Content-Type': 'multipart/form-data' }
+        })
+            .then(response => response.data);;
+    },
 }

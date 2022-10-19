@@ -1,18 +1,17 @@
 import React from 'react';
 import Profile from './Profile';
-import { getProfileThunkCreator, getStatusThunkCreator, updateStatusThunkCreator } from "../../redux/reducers/profileReducer";
+import { getProfileThunkCreator, getStatusThunkCreator, updateStatusThunkCreator, uploadPhoto } from "../../redux/reducers/profileReducer";
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { withAuthRedirect } from '../../hoc/withAuhRedirect';
 import { compose } from 'redux';
 
 class ProfileContainer extends React.Component {
-
-  componentDidMount() {
+  refreshProfile() {
     let userId = this.props.match.params.userId;
-    if (!userId) { 
-      userId = this.props.authorizedUserId; 
-      if(!userId){
+    if (!userId) {
+      userId = this.props.authorizedUserId;
+      if (!userId) {
         this.props.history.push("/login");
       }
     }
@@ -20,13 +19,26 @@ class ProfileContainer extends React.Component {
     this.props.getStatusThunkCreator(userId);
   }
 
+  componentDidMount() {
+    this.refreshProfile();
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (prevProps.match.params.userId !== this.props.match.params.userId) {
+      this.refreshProfile();
+    }
+  }
+
   render() {
     return (
-      <Profile 
-      {...this.props} 
-      profile={this.props.profile} 
-      status={this.props.status} 
-      updateStatus={this.props.updateStatusThunkCreator} />
+      <Profile
+        {...this.props}
+        isOwner={!this.props.match.params.userId}
+        profile={this.props.profile}
+        status={this.props.status}
+        updateStatus={this.props.updateStatusThunkCreator}
+        uploadPhoto={this.props.uploadPhoto}
+      />
     )
   }
 }
@@ -40,5 +52,10 @@ const mapStateToProps = (state) => ({
 export default compose(
   withAuthRedirect,
   withRouter,
-  connect(mapStateToProps, { getProfileThunkCreator, getStatusThunkCreator, updateStatusThunkCreator })
+  connect(mapStateToProps, {
+    getProfileThunkCreator,
+    getStatusThunkCreator,
+    updateStatusThunkCreator,
+    uploadPhoto
+  })
 )(ProfileContainer);
