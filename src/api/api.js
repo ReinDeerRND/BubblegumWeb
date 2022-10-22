@@ -51,7 +51,10 @@ export const profileAPI = {
         formData.append('image', file)
         return axiosConfig.put(`/profile/photo`, formData, {
             headers: { 'Content-Type': 'multipart/form-data' }
-        })
-            .then(response => response.data);;
+        }).then(response => response.data);
+    },
+    uploadProfile(profile) {
+        return axiosConfig.put(`/profile`, profile)
+            .then(response => response.data);
     },
 }

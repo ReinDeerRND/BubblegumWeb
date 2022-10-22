@@ -1,12 +1,16 @@
 import Preloader from '../../common/Preloader/Preloader';
 import classes from './ProfileInfo.module.css';
-import SocialItem from './SocialItem';
 import userPhoto from "../../../assets/images/userphoto.jpg";
 import backgroundPhoto from "../../../assets/images/china.jpg";
 //import ProfileStatus from "./ProfileStatus";
 import ProfileStatusWithHooks from './ProfileStatusWithHooks';
+import ProfileData from './ProfileData';
+import EditProfileData from './EditProfileData';
+import { useState } from 'react';
 
 const ProfileInfo = (props) => {
+  const [editMode, setEditMode] = useState(false);
+
   if (!props.profile) {
     return <Preloader />
   }
@@ -23,32 +27,23 @@ const ProfileInfo = (props) => {
       props.uploadPhoto(selectedFile);
     }
   }
+  const toggleEditMode = (mode) => {
+    setEditMode(mode);
+  }
+
+  const onSubmit =(formData)=>{
+    props.uploadProfileData(formData);
+    toggleEditMode(false);
+  }
 
   return (
     <div>
       <img className={classes.content_img} src={backgroundPhoto} alt="China" />
       <div className={classes.description_block}>
         <img alt="Avatar" src={props.profile.photos.small || userPhoto} />
-        <div>
-          <div>Name: {props.profile.fullName}</div>
-          <div>About me: {props.profile.aboutMe}</div>
-          <div>Search a Job: {props.profile.lookingForAJob ? <span>yes</span> : <span>no</span>}</div>
-          <div>Searching Job Description:
-            {props.profile.lookingForAJob && props.profile.lookingForAJobDescription
-              ? <span>{props.profile.lookingForAJobDescription}</span>
-              : null}
-          </div>
-          <div>Contacts: </div>
-          <div className={classes.social_container}>
-          {Object.keys(props.profile.contacts).map(key=>{
-            let value = props.profile.contacts[key];
-              if(value){
-                return <SocialItem social={value} title={key}/>
-              }
-              return null;
-            })}
-          </div>
-        </div>
+        {editMode ?
+          <EditProfileData initialValues={props.profile} onSubmit={onSubmit}/> :
+          <ProfileData profile={props.profile} switchToEditMode={toggleEditMode} isOwner={props.isOwner}/>}
       </div>
       <div className={classes.download_block}>
         {props.isOwner && <div>

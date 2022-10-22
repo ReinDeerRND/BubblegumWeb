@@ -26,4 +26,7 @@
     align-items: center;
     flex-wrap: wrap;
 }
+.top_button{
+    margin-bottom: 5px;
+}
 

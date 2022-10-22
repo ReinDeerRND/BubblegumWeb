@@ -1,6 +1,12 @@
 import React from 'react';
 import Profile from './Profile';
-import { getProfileThunkCreator, getStatusThunkCreator, updateStatusThunkCreator, uploadPhoto } from "../../redux/reducers/profileReducer";
+import {
+  getProfileThunkCreator,
+  getStatusThunkCreator,
+  updateStatusThunkCreator,
+  uploadPhoto,
+  uploadProfileData
+} from "../../redux/reducers/profileReducer";
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { withAuthRedirect } from '../../hoc/withAuhRedirect';
@@ -38,6 +44,7 @@ class ProfileContainer extends React.Component {
         status={this.props.status}
         updateStatus={this.props.updateStatusThunkCreator}
         uploadPhoto={this.props.uploadPhoto}
+        uploadProfileData={this.props.uploadProfileData}
       />
     )
   }
@@ -56,6 +63,7 @@ export default compose(
     getProfileThunkCreator,
     getStatusThunkCreator,
     updateStatusThunkCreator,
-    uploadPhoto
+    uploadPhoto,
+    uploadProfileData
   })
 )(ProfileContainer);

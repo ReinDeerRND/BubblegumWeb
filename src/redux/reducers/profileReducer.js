@@ -86,5 +86,15 @@ export const uploadPhoto = (file) => async (dispatch) => {
         dispatch(updatePhoto(response.data.photos));
     }
 }
+export const uploadProfileData = (formData) => async (dispatch, getState) => {
+    const userId = getState().auth.userId;
+
+    let response = await profileAPI.uploadProfile(formData);
+    debugger
+    if (response.resultCode === 0) {
+        dispatch(getProfileThunkCreator(userId));
+    }
+}
+
 
 export default profileReducer;
