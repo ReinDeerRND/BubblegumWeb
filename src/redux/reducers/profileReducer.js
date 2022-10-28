@@ -1,4 +1,5 @@
 import { profileAPI } from "../../api/api";
+import { stopSubmit } from "redux-form";
 
 const ADD_POST = "profile/ADD-POST";
 const DELETE_POST = "profile/DELETE_POST";
@@ -90,9 +91,10 @@ export const uploadProfileData = (formData) => async (dispatch, getState) => {
     const userId = getState().auth.userId;
 
     let response = await profileAPI.uploadProfile(formData);
-    debugger
     if (response.resultCode === 0) {
         dispatch(getProfileThunkCreator(userId));
+    } else {
+        dispatch(stopSubmit("profileData", { _error: response.messages[0] }))
     }
 }
 

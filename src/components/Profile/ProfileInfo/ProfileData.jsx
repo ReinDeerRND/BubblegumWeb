@@ -22,7 +22,7 @@ const ProfileData = ({ profile, switchToEditMode, isOwner }) => {
       <div className={classes.social_container}>
         {Object.keys(profile.contacts).map(key => {
           let value = profile.contacts[key];
-          return value ? <SocialItem social={value} title={key} /> : null;
+          return value ? <SocialItem social={value} title={key} key={key} /> : null;
         })}
       </div>
     </div>

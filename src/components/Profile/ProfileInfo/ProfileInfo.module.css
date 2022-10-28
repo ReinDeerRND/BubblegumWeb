@@ -26,7 +26,14 @@
     align-items: center;
     flex-wrap: wrap;
 }
+.socials{
+    display: flex;
+    flex-direction: column;
+}
 .top_button{
     margin-bottom: 5px;
+}
+.contacts_title{
+    margin-top: 10px;;
 }
 
