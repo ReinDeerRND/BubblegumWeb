@@ -1,6 +1,6 @@
 import './App.css';
 import Sidenav from './components/Sidenav/Sidenav';
-import { Route } from 'react-router';
+import { Route, Switch, Redirect} from 'react-router';
 import { BrowserRouter } from 'react-router-dom';
 import News from './components/News/News';
 import Music from './components/Music/Music';
@@ -8,6 +8,7 @@ import Settings from './components/Settings/Settings';
 import ProfileContainer from './components/Profile/ProfileContainer';
 import HeaderContainer from './components/Header/HeaderContainer';
 import Login from './components/Login/Login';
+import ErrorComponent from './components/Error/ErrorComponent';
 import React from 'react';
 import { connect } from "react-redux";
 import { compose } from 'redux';
@@ -41,13 +42,17 @@ class Wrapper extends React.Component {
             <Sidenav />
           </div>
           <div className="content">
-            <Route path='/profile/:userId?' render={() => <ProfileContainer />} />
-            <Route path='/dialogs' render={withLazyLoad(DialogsContainer)} />
-            <Route path='/users' render={withLazyLoad(UsersContainer)} />
-            <Route path='/news' component={News} />
-            <Route path='/music' component={Music} />
-            <Route path='/settings' component={Settings} />
-            <Route path='/login' component={Login} />
+            <Switch>
+              <Route exact path='/' render={() => <Redirect to={"/profile"} />} />
+              <Route path='/profile/:userId?' render={() => <ProfileContainer />} />
+              <Route path='/dialogs' render={withLazyLoad(DialogsContainer)} />
+              <Route path='/users' render={withLazyLoad(UsersContainer)} />
+              <Route path='/news' component={News} />
+              <Route path='/music' component={Music} />
+              <Route path='/settings' component={Settings} />
+              <Route path='/login' component={Login} />
+              <Route path='*' component={ErrorComponent} />
+            </Switch>
           </div>
         </div>
       </BrowserRouter>
