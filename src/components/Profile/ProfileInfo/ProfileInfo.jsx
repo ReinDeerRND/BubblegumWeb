@@ -52,7 +52,7 @@ const ProfileInfo = (props) => {
         </div>
         }
       </div>
-      <ProfileStatusWithHooks status={props.status} updateStatus={props.updateStatus} />
+      <ProfileStatusWithHooks status={props.status} updateStatus={props.updateStatus} isOwner={props.isOwner }/>
     </div>
   )
 }
