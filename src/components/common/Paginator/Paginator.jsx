@@ -1,3 +1,4 @@
+import cn from "classnames";
 import React, { useState } from "react";
 import classes from './Paginator.module.css';
 
@@ -25,7 +26,7 @@ const Paginator = ({ selectedPage, totalCount, pageSize, onPageChanged, partChun
         {selectedChunk > 0 && <button onClick={showPreviousChunk}> Previous </button>}
         <div>
             {pages.map(p => <span className={classes.page_item} key={p} onClick={(e) => onPageChanged(p)}>
-                <span className={selectedPage === p ? classes.active_page : undefined} >{p + 1}</span>
+                <span className={cn({ [classes.active_page]: selectedPage === p })} >{p + 1}</span>
             </span>)}
         </div>
         {selectedChunk < (pagesAmount / partChunk) - 1 && <button onClick={showNextChunk}> Next </button>}
