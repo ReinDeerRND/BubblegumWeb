@@ -11,14 +11,20 @@ export const authAPI = {
     getAuth() {
         return axiosConfig.get("auth/me");
     },
-    login(email, password, rememberMe = false) {
-        return axiosConfig.post("auth/login", { email, password, rememberMe });
+    login(email, password, rememberMe = false, captcha = null) {
+        return axiosConfig.post("auth/login", { email, password, rememberMe, captcha });
     },
     logout() {
         return axiosConfig.delete("auth/login");
     },
 }
 
+export const securityAPI = {
+    getCaptcha() {
+        return axiosConfig.get("security/get-captcha-url")
+            .then(response => response.data);
+    }
+}
 
 export const userAPI = {
     getUsers(page, pageSize) {
